@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react'
+import Header from './Header.jsx'
+import HighlightWidget from './HighlightWidget.jsx'
+import WeatherCard from './WeatherCard.jsx'
+import WeatherForecast from './WeatherForecast.jsx'
+import ProConDash from './ProConDash.jsx'
+import HeatMap from './HeatMap.jsx'
+import Footer from './Footer.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
+    const defaultWeather = {
+        weatherImg: "https://via.placeholder.com/200",
+        high: 0,
+        low: 0,
+        feelsLike: 0,
+        UV: 0,
+        humid: 0,
+        weatherCon: "null"
+    };
+    const defaultConditionTemp = {
+        condition: "Undefined condition",
+        type: "Temp" ,
+        eval: "Pro"
+    };
+    const defaultConditionUV = {
+        condition: "Undefined condition",
+        type: "UV" ,
+        eval: "Neutral"
+    };
+    const defaultConditionHumid = {
+        condition: "Undefined condition",
+        type: "Humid" ,
+        eval: "Con"
+    };
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const [curLocation, setCurLocation] = useState({lat: 0.0, lng: 0.0, name: "unknown"})
+    const [curWeather, setCurWeather] = useState(defaultWeather)
+    const [forecastWeather, setForecastWeather] = useState([defaultWeather])
+
+    const [conditions, setConditions] = useState([defaultConditionTemp, defaultConditionUV, defaultConditionHumid])
+
+    return (
+        <>
+            <img src="https://via.placeholder.com/200" alt="Tempa-vibe logo" />
+            <Header location={curLocation} setLocation={setCurLocation}/>
+            <hr />
+            <WeatherForecast forecastWeather={forecastWeather}/>
+            <hr />
+            <div>
+                <h1>Today:</h1>
+                <WeatherCard dayOfWeek="" forecated={false} weather={curWeather}/>
+            </div>
+            <hr />
+            <HighlightWidget conditions={conditions}/>
+            <hr />
+            <ProConDash conditions={conditions}/>
+            <hr />
+            <HeatMap location={curLocation}/>
+            <hr />
+            <Footer/>
+        </>
+    )
 }
 
 export default App
