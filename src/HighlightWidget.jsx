@@ -5,6 +5,11 @@ export default function HighlightWidget(props) {
 
     return(
         <div>
+            <ul>
+                    <li><h1>Temp</h1></li>
+                    <li><h1>UV</h1></li>
+                    <li><h1>Humidity</h1></li>
+            </ul>
             {/* Top pros */}
             <ul>
                     <li><ConditionCard condition={props.conditions.filter(cond => cond.type === "Temp")[0]}/></li>

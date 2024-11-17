@@ -10,7 +10,7 @@ export default function WeatherCard(props) {
                     L: {props.weather.low}°F </p> : 
                     <p>{props.weather.feelsLike}°F </p>}
             {!props.forecasted && <p>UV: {props.weather.UV}</p>}
-            <p>Humid: {props.weather.humid}%</p>
+            <p>Humidity: {props.weather.humid}%</p>
             <p>{props.weather.weatherCon}</p>
         </div>
     )

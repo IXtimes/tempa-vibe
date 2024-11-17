@@ -18,39 +18,6 @@ import Sunny from './assets/images/sunny.png'
 import Windy from './assets/images/windy.png'
 
 function App() {
-    const defaultWeather = {
-        weatherImg: "https://via.placeholder.com/100",
-        high: 0,
-        low: 0,
-        feelsLike: 0,
-        UV: 0,
-        humid: 0,
-        weatherCon: "null"
-    };
-    const defaultWeather2 = {
-        weatherImg: "https://via.placeholder.com/100",
-        high: 0,
-        low: 0,
-        feelsLike: 0,
-        UV: 0,
-        humid: 0,
-        weatherCon: "null"
-    };
-    const defaultConditionTemp = {
-        condition: "Undefined condition",
-        type: "Temp" ,
-        eval: "Pro"
-    };
-    const defaultConditionUV = {
-        condition: "Undefined condition",
-        type: "UV" ,
-        eval: "Neutral"
-    };
-    const defaultConditionHumid = {
-        condition: "Undefined condition",
-        type: "Humid" ,                           
-        eval: "Con"
-    };
 
     const images = [
         { id: 1, url: Atmospheric, label: 'Atmospheric' },
@@ -64,11 +31,11 @@ function App() {
         // Add more images as needed
     ];
 
-    const [curLocation, setCurLocation] = useState({lat: 0.0, lng: 0.0, name: "unknown"})
-    const [curWeather, setCurWeather] = useState(defaultWeather)
-    const [forecastWeather, setForecastWeather] = useState([defaultWeather, defaultWeather2])
+    const [curLocation, setCurLocation] = useState(null)
+    const [curWeather, setCurWeather] = useState(null)
+    const [forecastWeather, setForecastWeather] = useState([])
 
-    const [conditions, setConditions] = useState([defaultConditionTemp, defaultConditionUV, defaultConditionHumid])
+    const [conditions, setConditions] = useState([])
 
     function idToWeatherString(weatherId) {
         // Lets switch to determine what id case we hit
@@ -112,10 +79,6 @@ function App() {
         })
         
     }
-
-    useEffect(() => {
-        console.log(curLocation)
-    }, [curLocation])
 
     async function getLocationGeocode() {
         let results;
@@ -175,10 +138,69 @@ function App() {
     }
 
     useEffect(() => {
+        if(curWeather)
+            collateConditions();
+    }, [curWeather])
+
+    function collateConditions() {
+        var cons = [];
+        var time = new Date().getHours();
+        
+        // Evaluate temperature conditions
+        if(curWeather.feelsLike <= 20) {
+            cons.push({condition: "It is very cold out! You need to wear lots of clothes to keep warm!", level: "Danger"})
+            cons.push({condition: "Extreme cold temperatures like these can lead to frostbite and hypothermia, so avoid staying out for long periods of time", level: "Danger"})
+        }
+        if(curWeather.feelsLike <= 32)
+            cons.push({condition: "Below-freezing temperatures can lead to ice, making walkways and roadways slick! Walk with caution.", level: "Danger"})
+        if(curWeather.feelsLike > 32 && curWeather.feelsLike <= 50)
+            cons.push({condition: "The temperature indicates chilly conditions where some additional clothing is necessary. ", level: "Warning"})
+        if(curWeather.feelsLike > 50 && curWeather.feelsLike <= 85)
+            cons.push({condition: "Fair temperature conditions indicate no need to be concerned with how to dress", level: "Info"})
+        if(curWeather.feelsLike > 85 && curWeather.feelsLike <= 100) {
+            cons.push({condition: "High temperatures incentivize wearing light, loose, breathable clothing!", level: "Warning"})
+            cons.push({condition: "Hot conditions can dehydrate you faster than normal, make sure to drink plenty of water", level: "Warning"})
+            if(time > 11 && time < 16)
+                cons.push({condition: "Its peak temperature out right now, avoid strenuous activities", level: "Warning"})
+        }
+        if(curWeather.feelsLike > 100) {
+            cons.push({condition: "Temperature is extremely high! Avoid outdoor activities and stay in the air-conditioned areas", level: "Danger"})
+            cons.push({condition: "Avoid staying out for long periods, and watch for signs of illness due to excessive heat exposure.", level: "Danger"})
+        }
+
+        // Evaluate UV conditions
+        if(curWeather.UV <= 2)
+            cons.push({condition: "UV levels are at a negligible range right now.", level: "Info"})
+        if(curWeather.UV > 2 && curWeather.UV <= 5) {
+            cons.push({condition: "UV levels are slightly high, consider clothing that provides shade and applying sunscreen before going out.", level: "Info"})
+            if(time > 12 && time < 14)
+                cons.push({condition: "UV levels are more intense right now, avoid direct sun exposure as much as possible", level: "Warning"})
+        } if(curWeather.UV > 5 && curWeather.UV <= 7) {
+            cons.push({condition: "UV levels are high, wear protective clothing and apply sunscreen every two hours if going outside", level: "Warning"})
+            if(time > 10 && time < 16)
+                cons.push({condition: "UV levels are at their peak for the day, avoid sun exposure!", level: "Danger"})
+        } if(curWeather.UV > 7 && curWeather.UV <= 10)
+            cons.push({condition: "UV levels are very high, minimize outdoor exposure and prioritize UV-protective clothing and eye protection if going out.", level: "Danger"})
+        if(curWeather.UV > 10)
+            cons.push({condition: "UV levels are extremely high. Avoid going outside unless necessary or wear maximum UV protection. Sensitive individuals should NOT expose themselves to sunlight.", level: "Danger"})
+
+        // Evaluate humidity conditions
+        if(curWeather.humid <= 20)
+            cons.push({condition: "Conditions are dry out right now, attempt to stay hydrated as much as possible.", level: "Warning"})
+        if(curWeather.humid > 20 && curWeather.humid <= 60)
+            cons.push({condition: "Outdoor humidity is tolerable for average wear and activity", level: "Info"})
+        if(curWeather.humid > 60 && curWeather.humid <= 80)
+            cons.push({condition: "Conditions are slightly humid, be aware of participating in intense physical activities.", level: "Info"})
+        if(curWeather.humid > 80)
+            cons.push({condition: "Conditions are very humid right now, avoid strenuous activities and wear breathable clothing", level: "Warning"})
+        
+        setConditions(cons)
+    }
+
+    useEffect(() => {
         try{
-            if(curWeather.name === "unknown")
-                throw new Error("Waiting for geocode")
-            getWeathers()
+            if(curLocation !== null)
+                getWeathers();
         }
         catch(error){
             console.log(error)
@@ -207,18 +229,16 @@ function App() {
 
     return (
         <>
-            <Header location={curLocation} setLocation={setCurLocation}/>
+            {curLocation && <Header location={curLocation} setLocation={setCurLocation}/>}
             <hr />
-            <WeatherForecast forecastWeather={forecastWeather}/>
+            {conditions && <ProConDash conditions={conditions}/>}
             <hr />
             <div>
                 <h1>Today:</h1>
-                <WeatherCard dayOfWeek="" forecated={false} weather={curWeather}/>
+                {curWeather && <WeatherCard dayOfWeek="" forecated={false} weather={curWeather}/>}
             </div>
             <hr />
-            <HighlightWidget conditions={conditions}/>
-            <hr />
-            <ProConDash conditions={conditions}/>
+            {forecastWeather && <WeatherForecast forecastWeather={forecastWeather}/>}
             <hr />
             <Footer/>
         </>
