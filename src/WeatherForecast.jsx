@@ -2,7 +2,6 @@ import WeatherCard from "./WeatherCard.jsx";
 
 export default function WeatherForecast(props) {
     function getDayOfWeek (offset) {
-        console.log((new Date().getDay() + offset) % 7)
         switch((new Date().getDay() + offset) % 7) {
             case 0: return "Sunday";
             case 1: return "Monday";
