@@ -6,6 +6,7 @@ import WeatherForecast from './WeatherForecast.jsx'
 import ProConDash from './ProConDash.jsx'
 import HeatMap from './HeatMap.jsx'
 import Footer from './Footer.jsx'
+import './index.css'
 
 function App() {
     const defaultWeather = {

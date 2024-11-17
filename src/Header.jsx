@@ -4,10 +4,17 @@ export default function Header(props) {
 
     return(
         <header>
-            <p>Location: {props.location.name}</p>
-            <SearchBar/>
-            <img src="https://via.placeholder.com/50" alt="Tempa-vibe logo" />
-            <h1>Tempa-vibe</h1>
+            <div className="logo">       
+                <h1 className="logoText">Tempa-vibe</h1>  
+                <img  src="https://via.placeholder.com/50" alt="Tempa-vibe logo" />    
+            </div>
+
+            <section className="inlineHeader">           
+                <p className="location">Location: {props.location.name}</p>
+                <SearchBar/>
+            </section>
+
+
         </header>
     )
 }
