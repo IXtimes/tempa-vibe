@@ -15,9 +15,9 @@ export default function WeatherForecast(props) {
     }
 
     return (
-        <div>
+        <div className="weather-container">
             {props.forecastWeather.map((weather, i) => (
-                <div key={i} className="weather-container">
+                <div key={i}>
                     <WeatherCard 
                         dayOfWeek={getDayOfWeek(i + 1)} 
                         forecasted={true} 
