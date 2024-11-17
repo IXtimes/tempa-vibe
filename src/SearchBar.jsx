@@ -33,6 +33,9 @@ export default function SearchBar(props) {
     }
 
     return (
-        <input className="searchBar" type="text" placeholder="Location Search Bar"/>
+        <>
+            <input ref={inputRef} className="searchBar" type="text" placeholder="Location Search Bar"/>
+            <button className='searchButton' onClick={updateLocation}>Search</button>
+        </>
     )
 }

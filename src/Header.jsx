@@ -11,16 +11,8 @@ export default function Header(props) {
 
             <section className="inlineHeader">           
                 <p className="location">{props.location.name}</p>
-                <SearchBar />
+                <SearchBar setLocation={props.setLocation}/>
             </section>
-
-            <div id="clouds">
-                <div className="cloud x1"></div>
-                <div className="cloud x2"></div>
-                <div className="cloud x3"></div>
-                <div className="cloud x4"></div>
-                <div className="cloud x5"></div>
-            </div>
         </header>
     )
 }

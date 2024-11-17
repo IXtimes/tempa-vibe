@@ -234,16 +234,19 @@ function App() {
             
             {/* Header */}
             <header>
-                <div style={{ display: "flex", flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
+                <div style={{ display: "flex", flexDirection: "row"}}>
                     {curLocation && <Header location={curLocation} setLocation={setCurLocation} />}
                 </div>
+                
+                
             </header>
-
-            <br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <div className='alerts'>
+                    {conditions && <ProConDash conditions={conditions} />}
+                </div>
 
 
             
-            <div style={{ display: "flex", flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
+            <div style={{margin: '30px 0px', display: "flex", flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
                 <div>
                     {curWeather && <WeatherCard dayOfWeek="" forecasted={false} weather={curWeather} />}
                 </div>
@@ -254,14 +257,7 @@ function App() {
             </div>
             
 
-            <br /><br /><br /><br /><br /><br /><br /><br /><br />
-
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", 
-                alignItems: "center", backgroundColor: "#243d6a", width: "100vw",  
-                height: "calc(100vh - 100px)", paddingTop: "20px",  paddingBottom: "20px", color: "white" 
-            }}>
-                {conditions && <ProConDash conditions={conditions} />}
-            </div>
+            
 
             {/* Footer */}
             <div style={{ bottom: 0, left: 0, width: "100vw", backgroundColor: "rgba(0, 0, 0, 0.7)", color: "white", textAlign: "center", padding: "10px 0", zIndex: 1 }}>

@@ -2,7 +2,7 @@ export default function WeatherCard(props) {
     return (
         
         <div className="weatherCard">
-            <h3>{props.dayOfWeek}</h3>
+            <h3>{props.forecasted ? props.dayOfWeek : "Today"}</h3>
             <img className="weatherIcon" src={props.weather.weatherImg} alt="Weather Icon" />
             <section className="weatherStats">
                 {props.forecasted ? 
