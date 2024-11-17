@@ -1,5 +1,7 @@
 import SearchBar from "./SearchBar.jsx"
 
+import Logo from './assets/images/logo.png'
+
 export default function Header(props) {
 
     return(

@@ -18,7 +18,9 @@ export default function SearchBar(props) {
             throw new Error("Bad response!")
 
         const {lat, lng} = response.results[0].geometry.location
-        props.setLocation({lat: lat, lng: lng, name: inputRef.current.value})
+        const name = response.results[0].formatted_address
+
+        props.setLocation({lat: lat, lng: lng, name: name})
     }
 
     function updateLocation() {
