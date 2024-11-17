@@ -209,14 +209,14 @@ function App() {
     return (
         <>
             <Header location={curLocation} setLocation={setCurLocation}/>
-            <hr />
-            <WeatherForecast forecastWeather={forecastWeather}/>
-            <hr />
             <div>
                 <h1>Today:</h1>
                 <WeatherCard dayOfWeek="" forecated={false} weather={curWeather}/>
             </div>
+ 
+            <WeatherForecast forecastWeather={forecastWeather}/>
             <hr />
+ 
             <HighlightWidget conditions={conditions}/>
             <hr />
             <ProConDash conditions={conditions}/>
