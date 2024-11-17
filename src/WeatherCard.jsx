@@ -15,17 +15,3 @@ export default function WeatherCard(props) {
         </div>
     )
 }
-
-WeatherCard.defaultProps = {
-    weather: {
-        weatherImg: "https://via.placeholder.com/150",
-        high: 0,
-        low: 0,
-        feelsLike: 0,
-        UV: 0,
-        humid: 0,
-        weatherCon: "null"
-    },
-    dayOfWeek: "Null",
-    forecasted: false
-}

@@ -9,7 +9,16 @@ import Footer from './Footer.jsx'
 
 function App() {
     const defaultWeather = {
-        weatherImg: "https://via.placeholder.com/200",
+        weatherImg: "https://via.placeholder.com/100",
+        high: 0,
+        low: 0,
+        feelsLike: 0,
+        UV: 0,
+        humid: 0,
+        weatherCon: "null"
+    };
+    const defaultWeather2 = {
+        weatherImg: "https://via.placeholder.com/100",
         high: 0,
         low: 0,
         feelsLike: 0,
@@ -29,19 +38,18 @@ function App() {
     };
     const defaultConditionHumid = {
         condition: "Undefined condition",
-        type: "Humid" ,
+        type: "Humid" ,                           
         eval: "Con"
     };
 
     const [curLocation, setCurLocation] = useState({lat: 0.0, lng: 0.0, name: "unknown"})
     const [curWeather, setCurWeather] = useState(defaultWeather)
-    const [forecastWeather, setForecastWeather] = useState([defaultWeather])
+    const [forecastWeather, setForecastWeather] = useState([defaultWeather, defaultWeather2])
 
     const [conditions, setConditions] = useState([defaultConditionTemp, defaultConditionUV, defaultConditionHumid])
 
     return (
         <>
-            <img src="https://via.placeholder.com/200" alt="Tempa-vibe logo" />
             <Header location={curLocation} setLocation={setCurLocation}/>
             <hr />
             <WeatherForecast forecastWeather={forecastWeather}/>

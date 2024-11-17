@@ -1,7 +1,8 @@
 import WeatherCard from "./WeatherCard.jsx";
 
 export default function WeatherForecast(props) {
-    const getDayOfWeek = (offset) => {
+    function getDayOfWeek (offset) {
+        console.log((new Date().getDay() + offset) % 7)
         switch((new Date().getDay() + offset) % 7) {
             case 0: return "Sunday";
             case 1: return "Monday";
@@ -17,7 +18,7 @@ export default function WeatherForecast(props) {
         <div>
             <ul>
                 {props.forecastWeather.map((weather, i) => 
-                <li><WeatherCard dayOfWeek={() => getDayOfWeek(i + 1)} forecasted={true} weather={weather}/></li>)}
+                <li key={i}><WeatherCard dayOfWeek={getDayOfWeek(i + 1)} forecasted={true} weather={weather}/></li>)}
             </ul>
         </div>
     )

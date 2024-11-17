@@ -5,8 +5,8 @@ export default function ProConDash(props) {
     return(
         <div>
             <ul>
-                {props.conditions.map((condition) => 
-                <li><ConditionCard condition={condition}/></li>)}
+                {props.conditions.map((condition, i) => 
+                <li key={i}><ConditionCard condition={condition}/></li>)}
             </ul>
         </div>
     );
