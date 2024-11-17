@@ -8,13 +8,14 @@ import ProConDash from './ProConDash.jsx'
 import HeatMap from './HeatMap.jsx'
 import Footer from './Footer.jsx'
 
-import Atmosphere from './assets/images/atmosphere.png'
-import PartialCloudy from './assets/images/cloudy.png'
+import Atmospheric from './assets/images/atmosphere.png'
+import Cloudy from './assets/images/cloudy.png'
 import PartialCloudy from './assets/images/partialCloudy.png'
-import PartialCloudy from './assets/images/partialCloudy.png'
-import PartialCloudy from './assets/images/partialCloudy.png'
-import PartialCloudy from './assets/images/partialCloudy.png'
-import PartialCloudy from './assets/images/partialCloudy.png'
+import Rainy from './assets/images/rainy.png'
+import Snowy from './assets/images/snowy.png'
+import Stormy from './assets/images/stormy.png'
+import Sunny from './assets/images/sunny.png'
+import Windy from './assets/images/windy.png'
 
 function App() {
     const defaultWeather = {
@@ -52,14 +53,14 @@ function App() {
     };
 
     const images = [
-        { id: 1, url: '../assets/images/atmosphere.png', label: 'Atmospheric' },
-        { id: 2, url: '../assets/images/cloudy.png', label: 'Cloudy' },
+        { id: 1, url: Atmospheric, label: 'Atmospheric' },
+        { id: 2, url: Cloudy, label: 'Cloudy' },
         { id: 3, url: PartialCloudy, label: 'Partial Cloudy' },
-        { id: 4, url: '../assets/images/rainy.png', label: 'Rainy' },
-        { id: 5, url: '../assets/images/snowy.png', label: 'Snowy' },
-        { id: 6, url: '../assets/images/stormy.png', label: 'Stormy' },
-        { id: 7, url: '../assets/images/sunny.png', label: 'Sunny' },
-        { id: 8, url: '../assets/images/windy.png', label: 'Windy' },
+        { id: 4, url: Rainy, label: 'Rainy' },
+        { id: 5, url: Snowy, label: 'Snowy' },
+        { id: 6, url: Stormy, label: 'Stormy' },
+        { id: 7, url: Sunny, label: 'Sunny' },
+        { id: 8, url: Windy, label: 'Windy' },
         // Add more images as needed
     ];
 
@@ -147,7 +148,7 @@ function App() {
                 weatherImg: images.find(img => img.label === idToWeatherString(current.weather[0].id)).url,
                 high: NaN,
                 low: NaN,
-                feelsLike: current.feels_like,
+                feelsLike: (((current.feels_like - 273.15) * (9/5)) + 32).toFixed(2),
                 UV: current.uvi,
                 humid: current.humidity,
                 weatherCon: current.weather[0].main
@@ -162,8 +163,8 @@ function App() {
             let {list} = await forecastWeatherResponse.json()
             setForecastWeather(list.map(datem => {return {
                 weatherImg: images.find(img => img.label === idToWeatherString(datem.weather[0].id)).url,
-                high: datem.temp.max,
-                low: datem.temp.min,
+                high: ((datem.temp.max * (9/5)) + 32).toFixed(2),
+                low: ((datem.temp.min * (9/5)) + 32).toFixed(2),
                 feelsLike: NaN,
                 UV: NaN,
                 humid: datem.humidity,
@@ -172,10 +173,6 @@ function App() {
             }))
         }
     }
-
-    useEffect(() => {
-        console.log(curWeather, forecastWeather)
-    }, [curWeather])
 
     useEffect(() => {
         try{
@@ -222,8 +219,6 @@ function App() {
             <HighlightWidget conditions={conditions}/>
             <hr />
             <ProConDash conditions={conditions}/>
-            <hr />
-            <HeatMap location={curLocation}/>
             <hr />
             <Footer/>
         </>
