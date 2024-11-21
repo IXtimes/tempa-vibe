@@ -3,7 +3,7 @@ export default function Header(props) {
 
     return(
         <footer>
-            <p>Made by Xander Corcoran, Jason Nguyen, Thomas Nguyen, Hector Nguyen</p>
+            <p>Made by Xander Corcoran, Jason Nguyen, Thomas Nguyen, Doanh Dinh</p>
         </footer>
     )
 }
