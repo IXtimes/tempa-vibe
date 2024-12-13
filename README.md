@@ -1,3 +1,4 @@
 # Tempa-vibe
 
-A heat/cold and UV map that recommends pros and cons to activities that you can do based on your location. Developed under 24 hours.
+A weather heating and cooling map that uses activity pros and cons with factors like UV based on the user's location. This entire weather website was created in under 24 hours. 
+
